@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <link rel="stylesheet" href="css/style.css"></link>
+    <link rel="stylesheet" href="css/index.css"></link>
+</head>
+
+<body>
+
+    <div id="checkup_box">
+        <h2 class="font_white">贪吃蛇小游戏</h2>
+        <button class="checkup" onclick="hide('checkup_box'),setParam(1,false,0),showSnakeMain()">简单</button><br>
+        <button class="checkup" onclick="hide('checkup_box'),setParam(2,false,10),showSnakeMain()">一般</button><br>
+        <button class="checkup" onclick="hide('checkup_box'),setParam(3,true,10),showSnakeMain()">困难</button><br>
+        <button class="checkup" onclick="hide('checkup_box'),setParam(4,true,50),showSnakeMain()">变态</button><br>
+        <button class="checkup" onclick="hide('checkup_box'),show('uer_set_data')">觉得太简单</button>
+        <div id="game_rule" class="font_white">
+            游戏场景说明： 白色方块为贪吃蛇 红色方块为目标 黄色方块为障碍物 黑色方块为墙
+            <br><br>游戏规则：贪吃蛇吃到目标后身体长度+1，撞到障碍物，墙，和自己，游戏结束
+        </div>
+    </div>
+
+    <div id="snake_main">
+
+        <div class="container">
+            <canvas class="canvas" width="400" height="400"></canvas>
+            <div class="operations">
+                <div class="score font_white">
+                    分数: <span id="score">0</span>
+                </div>
+                <button id="start">开始</button>
+                <button id="pause">暂停</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="light" class="play_box">
+
+        <div class="content">
+            <h2 class="font_white content_item">游戏结束</h2>
+            <h4 id="cur_score" class="font_white content_item"></h4>
+            <h4 id="his_score" class="font_white content_item"></h4>
+            <button class="content_item" onclick="show('checkup_box'),hide('light'),hideSnakeMain()">再来一局</button>
+
+        </div>
+
+    </div>
+
+    <div id="uer_set_data" class="play_box">
+        <div class="content">
+
+            <input placeholder="障碍物数量(1-100)" style="width: 100px;" type="number" class="user_custom content_item" required min="1" max="100" id="obstacleNum">
+            <select style="width: 100px;" id="enableWall" class="user_custom content_item">
+                    <option value="false" seleced>不启用墙</option>
+                    <option value="true">启用墙</option>
+                </select>
+            <button style="width: 100px;" type="submit" id="userCustom" class="content_item" onclick="userCustomData()">设置好了</button>
+
+        </div>
+    </div>
+
+    <script>
+        function userCustomData() {
+            flag = checkAndSetUserCustom();
+            if (!flag) {
+                alert("请设置好有效数据")
+            }
+            if (flag) {
+                hide('uer_set_data');
+            }
+        }
+    </script>
+
+    <script src="js/Utils.js"></script>
+    <script src="js/Obstacle.js"></script>
+    <script src="js/Target.js"></script>
+    <script src="js/Snake.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/dom.js"></script>
+</body>
+
+</html>

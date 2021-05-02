@@ -1,0 +1,54 @@
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #99CCFF;
+        }
+        
+        .container {
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .canvas {
+            background-color: #666666;
+            box-shadow: 0 1px 10px #3e3e3e;
+            margin-right: 10px;
+        }
+        
+        .operations {
+            display: flex;
+            flex-direction: column;
+            width: 85px;
+        }
+        
+        .score {
+            margin-bottom: 15px;
+        }
+        
+        button {
+            margin-bottom: 10px;
+            height: 25px;
+            background-color: #55c4d0;
+            border: none;
+            box-shadow: 0 1px 5px #55c4d0;
+            outline: none;
+            cursor: pointer;
+            color: #fff;
+        }
+        
+        .checkup {
+            height: 5rem;
+            width: 20rem;
+        }
+        
+        button:active {
+            transform: scale(0.8);
+        }
+        
+        .font_white {
+            color: white;
+        }
