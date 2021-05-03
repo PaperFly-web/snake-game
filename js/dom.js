@@ -17,12 +17,19 @@ function hideSnakeMain() {
     document.getElementById('snake_main').style.display = 'none';
 }
 
+
+//开始和暂停键
+const startBtn = document.getElementById('start')
+const pauseBtn = document.getElementById('pause')
 startBtn.addEventListener('click', () => {
     start()
+        //播放背景音乐
+    backgroundAudio(true)
 })
 
 pauseBtn.addEventListener('click', () => {
     clearInterval(timer)
+    backgroundAudio(false)
 })
 
 window.addEventListener('keydown', (event) => {

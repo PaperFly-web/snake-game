@@ -92,8 +92,9 @@ Snake.prototype.changeDirection = function(direction) {
 Snake.prototype.eatTarget = function(target) {
     //只有头部吃到了，才算吃到
     if (this.x === target.x && this.y === target.y) {
-        this.targetNum++
-            return true
+        this.targetNum++;
+
+        return true
     }
     return false
 }

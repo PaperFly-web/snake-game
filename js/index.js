@@ -6,9 +6,7 @@ const size = 10 //小方块的大小
 const rows = canvas.height / size
 const columns = canvas.width / size
 
-//开始和暂停键
-const startBtn = document.getElementById('start')
-const pauseBtn = document.getElementById('pause')
+
 
 
 
@@ -53,12 +51,18 @@ function start() {
 
         //传入目标，如果吃到了，就更新目标在画布中的位置
         if (snake.eatTarget(target)) {
+            audio(400.00);
             //更新目标的时候，不能和障碍物重合
             target.genRandomLocation(obstacle)
         }
         //检测是否有和身体发生碰撞和是否与障碍物有碰撞
         isOver = snake.checkCollision() || snake.collisionObstacle(obstacle);
         if (isOver) {
+            //结束背景音乐
+            backgroundAudio(false);
+            //播放游戏结束声音
+            audio(-1);
+
             setMaxScore();
             gameOver();
             //弹窗
