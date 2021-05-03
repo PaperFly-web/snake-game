@@ -89,6 +89,21 @@ Snake.prototype.changeDirection = function(direction) {
     }
 }
 
+//判断是否需要改变方向
+Snake.prototype.isChangeDirection = function(direction) {
+    switch (direction) {
+        case 'Up':
+            return this.ySpeed === 0;
+        case 'Down':
+            return this.ySpeed === 0;
+        case 'Left':
+            return this.xSpeed === 0;
+        case 'Right':
+            return this.xSpeed === 0;
+    }
+}
+
+
 Snake.prototype.eatTarget = function(target) {
     //只有头部吃到了，才算吃到
     if (this.x === target.x && this.y === target.y) {

@@ -34,7 +34,13 @@ pauseBtn.addEventListener('click', () => {
 
 window.addEventListener('keydown', (event) => {
     const direction = event.key.replace('Arrow', '')
-    snake.changeDirection(direction)
+
+    // console.log("是否需要改变方向", snake.isChangeDirection(direction))
+    //先判断是否需要改变方向
+    if (snake.isChangeDirection(direction)) {
+        snake.changeDirection(direction)
+    }
+
 })
 
 
