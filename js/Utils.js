@@ -11,7 +11,7 @@ function getWidthAndHeightAndSize() {
     wh = Math.floor(wh * 4 / 7);
     size = Math.floor(wh / 40);
     wh = wh - wh % size; //高和宽变成size的整数倍
-    return { size, wh, "width": wh }
+   return { size, "height": wh, "width": wh }
 }
 //生成画布中的随机位置
 function randomNum(canvasOptions, size) {
