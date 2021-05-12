@@ -72,18 +72,18 @@ Snake.prototype.changeDirection = function(direction) {
     switch (direction) {
         case 'Up':
             this.xSpeed = 0
-            this.ySpeed = -size * 1
+            this.ySpeed = -this.size * 1
             break
         case 'Down':
             this.xSpeed = 0
-            this.ySpeed = size * 1
+            this.ySpeed = this.size * 1
             break
         case 'Left':
-            this.xSpeed = -size * 1
+            this.xSpeed = -this.size * 1
             this.ySpeed = 0
             break
         case 'Right':
-            this.xSpeed = size * 1
+            this.xSpeed = this.size * 1
             this.ySpeed = 0
             break
     }
@@ -91,6 +91,8 @@ Snake.prototype.changeDirection = function(direction) {
 
 //判断是否需要改变方向
 Snake.prototype.isChangeDirection = function(direction) {
+
+    console.log(this.ySpeed, this.xSpeed)
     switch (direction) {
         case 'Up':
             return this.ySpeed === 0;
@@ -100,7 +102,9 @@ Snake.prototype.isChangeDirection = function(direction) {
             return this.xSpeed === 0;
         case 'Right':
             return this.xSpeed === 0;
+
     }
+    return false;
 }
 
 

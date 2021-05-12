@@ -3,6 +3,8 @@ function Target(size, canvasOptions) {
     this.y
     this.size = size
     this.canvasOptions = canvasOptions
+
+    // console.log("目标被创建", this.canvasOptions)
 }
 
 //更新目标在画布中的位置
@@ -22,6 +24,7 @@ Target.prototype.genRandomLocation = function(obstacle) {
     }
 
     const { x, y } = xy;
+    console.log("目标生成的随机位置", xy)
     this.x = x;
     this.y = y;
 
@@ -32,6 +35,7 @@ Target.prototype.genRandomLocation = function(obstacle) {
 
 Target.prototype.draw = function() {
     const { ctx } = this.canvasOptions
+        // console.log(this.canvasOptions)
     ctx.fillStyle = '#e83333'
     ctx.fillRect(this.x, this.y, this.size, this.size)
 }

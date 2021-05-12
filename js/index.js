@@ -1,118 +1,74 @@
-const canvas = document.querySelector('.canvas')
-const ctx = canvas.getContext('2d')
-const size = 10 //小方块的大小
-
-//计算出画出多少行和列
-const rows = canvas.height / size
-const columns = canvas.width / size
+let ioc = new IOC();
+let { scene, game, snake, target, obstacle } = ioc.getObjects();
+scene.set(snake, target, obstacle)
+game.set(snake, target, obstacle)
 
 
 
 
+//是否对这次的开始或者结束键盘处理完毕，以防频繁按键，导致没来得及处理上次的按键事件
+let handleIsComplete = [true, true];
+let timer = null;
+let openOrCloseBgAu = true;
+//键盘控制游戏开始结束
+window.addEventListener('keydown', (event) => {
+    const direction = event.key.replace('Arrow', '')
+        // console.log("键盘按的键", "." + direction + ".")
+    if (direction === "Enter" && snakeIsShow && handleIsComplete[0]) {
 
+        timer = setInterval(() => {
+            game.start(timer)
+        }, 150)
 
-let isOver = false; //游戏是否结束
+        //播放背景音乐
+        backgroundAudio(true)
+        handleIsComplete[0] = false;
+        handleIsComplete[1] = true;
+    } else if (direction === " " && snakeIsShow && handleIsComplete[1]) {
 
-let snake = new Snake(size, { canvas, ctx })
-let target = new Target(size, { canvas, ctx, rows, columns })
-let obstacle = new Obstacle(size, { canvas, ctx, rows, columns })
-let timer = null
+        game.pause(timer)
+        backgroundAudio(false)
+        handleIsComplete[0] = true;
+        handleIsComplete[1] = false;
+    } else if (direction === "a") {
+        openOrCloseBgAu = !openOrCloseBgAu;
 
-//用于存储每个关卡历史最高分
-let targerNum = [];
-let type //当前是在哪个关卡
-function init() {
-    //初始化画布
-    target.genRandomLocation()
-    target.draw()
-
-    obstacle.genRandomLocation(target)
-    console.log(localStorage.getItem("enableWall"))
-    if (localStorage.getItem("enableWall") === "true") {
-        console.log("墙被启动了")
-        obstacle.enableWall()
+        openOrCloseAudio(openOrCloseBgAu)
     }
-    obstacle.draw()
 
-    snake.initMaxScore();
-    snake.draw()
-}
-
-
-
-
-function start() {
-    timer = setInterval(() => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        target.draw()
-        obstacle.draw()
-        snake.update()
-        snake.draw()
-
-        //传入目标，如果吃到了，就更新目标在画布中的位置
-        if (snake.eatTarget(target)) {
-            audio(400.00);
-            //更新目标的时候，不能和障碍物重合
-            target.genRandomLocation(obstacle)
-        }
-        //检测是否有和身体发生碰撞和是否与障碍物有碰撞
-        isOver = snake.checkCollision() || snake.collisionObstacle(obstacle);
-        if (isOver) {
-            //结束背景音乐
-            backgroundAudio(false);
-            //播放游戏结束声音
-            audio(-1);
-
-            setMaxScore();
-            gameOver();
-            //弹窗
-            show('light');
-        }
-        document.getElementById('score').innerText = snake.targetNum
-    }, 150)
-}
+    // 控制贪吃蛇的方向
+    //先判断是否需要改变方向
+    if (snake.isChangeDirection(direction)) {
+        snake.changeDirection(direction)
+    }
+    console.log("是否改变方向", snake.isChangeDirection(direction))
+})
 
 
 
 
-//游戏结束
-function gameOver() {
-    console.log("游戏结束")
-    document.getElementById("cur_score").innerHTML = "当前关卡得分：" + snake.targetNum;
-    document.getElementById("his_score").innerHTML = "历史最高分：" + getMaxScore(this.type);
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    clearInterval(timer)
-    snake.init() //贪吃蛇数据归位
-    obstacle.init() //障碍物数据归位
-    init()
-}
-
-
-//设置关卡难度
+//设置关卡难度，进入游戏场景
 function setParam(type, enableWall, obstacleNum) {
     console.log("当前关卡", type)
-    this.type = type;
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-
+    localStorage.setItem("type", type);
     localStorage.setItem("enableWall", enableWall);
     localStorage.setItem("obstacleNum", obstacleNum);
-    snake.init() //贪吃蛇数据归位
-    obstacle.init()
-    init()
+    //重新开始一个游戏，数据归位
+    handleIsComplete = [true, true];
+    scene.init()
 
 }
 
 
-
-function setMaxScore() {
+function setMaxScore(type) {
     //获取本地存储的历史最高纪录
     let target = localStorage.getItem("targetNum");
 
     target = JSON.parse(target);
     console.log(target)
     for (let i = 0; i < target.length; i++) {
-        if (target[i].type + "" === this.type + "") {
+        if (target[i].type + "" === type + "") {
             target[i].maxScore = snake.targetNum > parseInt(target[i].maxScore) ? snake.targetNum : parseInt(target[i].maxScore);
             console.log("当前关卡历史最高分", target[i].maxScore)
             break;

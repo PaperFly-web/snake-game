@@ -1,9 +1,18 @@
 const AUDIO_BACKGROUND = new Audio('audio/background.mp3');
 const AUDIO_OVER = new Audio('audio/over.mp3');
+let AUDIO_VOLUME = 1;
 
+function getWidthAndHeightAndSize() {
+    height = document.body.clientHeight
+    height = Math.floor(height * 4 / 7);
+    size = Math.floor(height / 40);
+    height = height - height % size; //高和宽变成size的整数倍
+    return { size, height, "width": height }
+}
 //生成画布中的随机位置
 function randomNum(canvasOptions, size) {
     const { rows, columns } = canvasOptions
+    // console.log("utils接收到的数据", canvasOptions, size)
 
     x = (Math.floor(Math.random() * (columns) - 1) + 1) * size
     y = (Math.floor(Math.random() * (rows) - 1) + 1) * size
@@ -24,9 +33,22 @@ function randomNum(canvasOptions, size) {
     return { x, y }
 }
 
+//开启还是关闭音乐
+function openOrCloseAudio(flag) {
+    if (flag) {
+        AUDIO_VOLUME = 1;
+        backgroundAudio(true)
+
+    } else {
+        backgroundAudio(false)
+        AUDIO_VOLUME = 0;
+    }
+
+}
 
 function audio(fre) {
     if (fre == -1) {
+        AUDIO_OVER.volume = AUDIO_VOLUME;
         AUDIO_OVER.play();
         return;
     }
@@ -62,7 +84,7 @@ function audio(fre) {
     // 当前时间设置音量为0
     gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
     // 0.01秒后音量为1
-    gainNode.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.01);
+    gainNode.gain.linearRampToValueAtTime(AUDIO_VOLUME, audioCtx.currentTime + 0.01);
     // 音调从当前时间开始播放
     oscillator.start(audioCtx.currentTime);
     // 1秒内声音慢慢降低，是个不错的停止声音的方法
@@ -75,7 +97,7 @@ function audio(fre) {
 
 function backgroundAudio(playOrPause) {
     // 创建<audio>标签(参数:音频文件路径)
-    AUDIO_BACKGROUND.volume = 0.2;
+    AUDIO_BACKGROUND.volume = 0.4 * AUDIO_VOLUME;
     if (playOrPause) {
         AUDIO_BACKGROUND.play();
         AUDIO_BACKGROUND.loop = true;
@@ -85,4 +107,42 @@ function backgroundAudio(playOrPause) {
         AUDIO_BACKGROUND.currentTime = 0;
     }
 
+}
+
+
+//html的dom操作js
+function show(data) {
+    document.getElementById(data).style.display = 'block';
+}
+
+function hide(data) {
+    document.getElementById(data).style.display = 'none';
+
+}
+
+let snakeIsShow = false; //用来判断是否进入游戏界面
+//贪吃蛇主页显示与否，以防不在游戏界面的时候，就让游戏开始了
+function showSnakeMain() {
+    document.getElementById('snake_main').style.display = 'block';
+    snakeIsShow = true;
+}
+
+function hideSnakeMain() {
+    snakeIsShow = false;
+    document.getElementById('snake_main').style.display = 'none';
+}
+
+
+
+//检测并设置用户自定义数据
+function checkAndSetUserCustom() {
+    let num = document.getElementById("obstacleNum").value;
+    let enableWall = document.getElementById("enableWall").value;
+    console.log("用户自定义关卡难度", num, enableWall)
+    if (num >= 1 && num <= 100) {
+        setParam(5, enableWall == "true", parseInt(num));
+        showSnakeMain();
+        return true;
+    }
+    return false;
 }
