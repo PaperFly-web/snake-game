@@ -5,9 +5,13 @@ let AUDIO_VOLUME = 1;
 function getWidthAndHeightAndSize() {
     height = document.body.clientHeight
     height = Math.floor(height * 4 / 7);
-    size = Math.floor(height / 40);
-    height = height - height % size; //高和宽变成size的整数倍
-    return { size, height, "width": height }
+    
+    wh = Math.min(height, width); //去宽和高中的最小值
+
+    wh = Math.floor(wh * 4 / 7);
+    size = Math.floor(wh / 40);
+    wh = wh - wh % size; //高和宽变成size的整数倍
+    return { size, wh, "width": wh }
 }
 //生成画布中的随机位置
 function randomNum(canvasOptions, size) {
