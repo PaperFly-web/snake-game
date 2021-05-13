@@ -30,7 +30,6 @@ Snake.prototype.draw = function() {
         const { x, y } = this.tails[i]
         ctx.fillRect(x, y, this.size, this.size)
     }
-    // console.log("身体长度", this.tails.length)
     //绘制头部
     ctx.fillRect(this.x, this.y, this.size, this.size)
 }
@@ -92,7 +91,7 @@ Snake.prototype.changeDirection = function(direction) {
 //判断是否需要改变方向
 Snake.prototype.isChangeDirection = function(direction) {
 
-    console.log(this.ySpeed, this.xSpeed)
+    // console.log(this.ySpeed, this.xSpeed)
     switch (direction) {
         case 'Up':
             return this.ySpeed === 0;
@@ -136,22 +135,4 @@ Snake.prototype.checkCollision = function() {
         }
     }
     return false;
-}
-
-
-//初始化本地  每个关卡的历史最高分
-Snake.prototype.initMaxScore = function() {
-    //获取本地存储的历史最高纪录
-    let targerNum = [
-        { "type": 1, "maxScore": 0 },
-        { "type": 2, "maxScore": 0 },
-        { "type": 3, "maxScore": 0 },
-        { "type": 4, "maxScore": 0 },
-        { "type": 5, "maxScore": 0 }
-    ];
-    if (localStorage.getItem("targetNum") == null) {
-        //如果为空，就初始化存储一个
-        localStorage.setItem("targetNum", JSON.stringify(targerNum));
-
-    }
 }

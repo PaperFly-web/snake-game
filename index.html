@@ -21,36 +21,19 @@
         <div id="game_rule" class="font_white">
             游戏场景说明： 白色方块为贪吃蛇 红色方块为目标 黄色方块为障碍物 黑色方块为墙
             <br><br>游戏规则：贪吃蛇吃到目标后身体长度+1，撞到障碍物，墙，和自己，游戏结束
+            <br><br>玩法说明：选择关卡，然后按Enter键开始游戏 空格键暂停游戏 A键关闭或者开启音乐
         </div>
     </div>
 
     <div id="snake_main">
 
         <div class="container">
-            <canvas class="canvas" width="400" height="400"></canvas>
-            <div class="operations">
-                <div class="score font_white">
-                    分数: <span id="score">0</span><br> 玩法: <span>Enter键开始游戏 空格键暂停游戏 A键关闭或者开启音乐</span>
-                </div>
-                <!-- <button id="start">开始</button>
-                <button id="pause">暂停</button> -->
-            </div>
+            <canvas class="canvas" width="400" height="400" id="canvas"></canvas>
         </div>
 
     </div>
 
 
-    <div id="light" class="play_box">
-
-        <div class="content">
-            <h2 class="font_white content_item">游戏结束</h2>
-            <h4 id="cur_score" class="font_white content_item"></h4>
-            <h4 id="his_score" class="font_white content_item"></h4>
-            <button class="content_item" onclick="show('checkup_box'),hide('light'),hideSnakeMain()">再来一局</button>
-
-        </div>
-
-    </div>
 
     <div id="uer_set_data" class="play_box">
         <div class="content">
@@ -86,8 +69,6 @@
     <script src="js/Game.js"></script>
     <script src="js/IOC.js"></script>
     <script src="js/index.js"></script>
-
-    <!-- <script src="js/dom.js"></script> -->
 </body>
 
 </html>

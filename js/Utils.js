@@ -3,15 +3,16 @@ const AUDIO_OVER = new Audio('audio/over.mp3');
 let AUDIO_VOLUME = 1;
 
 function getWidthAndHeightAndSize() {
-    height = document.body.clientHeight;
-    width = document.body.clientWidth;
-
-    wh = Math.min(height, width); //去宽和高中的最小值
+    wh = Math.min(document.body.clientWidth, document.body.clientHeight); //取宽和高中的最小值
 
     wh = Math.floor(wh * 4 / 7);
     size = Math.floor(wh / 40);
     wh = wh - wh % size; //高和宽变成size的整数倍
     return { size, "height": wh, "width": wh }
+}
+
+function setBgColor(c, id) {
+    document.getElementById(id).style[' background-color'] = c;
 }
 //生成画布中的随机位置
 function randomNum(canvasOptions, size) {
@@ -127,13 +128,13 @@ function hide(data) {
 let snakeIsShow = false; //用来判断是否进入游戏界面
 //贪吃蛇主页显示与否，以防不在游戏界面的时候，就让游戏开始了
 function showSnakeMain() {
-    document.getElementById('snake_main').style.display = 'block';
+    show('snake_main')
     snakeIsShow = true;
 }
 
 function hideSnakeMain() {
     snakeIsShow = false;
-    document.getElementById('snake_main').style.display = 'none';
+    hide('snake_main')
 }
 
 

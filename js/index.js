@@ -17,7 +17,8 @@ window.addEventListener('keydown', (event) => {
     if (direction === "Enter" && snakeIsShow && handleIsComplete[0]) {
 
         timer = setInterval(() => {
-            game.start(timer)
+
+            game.run(timer)
         }, 150)
 
         //播放背景音乐
@@ -41,7 +42,7 @@ window.addEventListener('keydown', (event) => {
     if (snake.isChangeDirection(direction)) {
         snake.changeDirection(direction)
     }
-    console.log("是否改变方向", snake.isChangeDirection(direction))
+
 })
 
 
@@ -56,6 +57,7 @@ function setParam(type, enableWall, obstacleNum) {
     localStorage.setItem("obstacleNum", obstacleNum);
     //重新开始一个游戏，数据归位
     handleIsComplete = [true, true];
+    game.init()
     scene.init()
 
 }
