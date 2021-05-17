@@ -8,7 +8,7 @@ function Scene(canvas, ctx, size) {
     this.snake = null;
     this.target = null;
     this.obstacle = null;
-    this.n = 2.5;
+    this.n = 2.5; //控制字体大小
     this.fontSize = this.size * this.n;
 }
 
@@ -20,21 +20,21 @@ Scene.prototype.set = function(snake, target, obstacle) {
 
 Scene.prototype.init = function() {
     //把场景中的数据全部归位
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.gameRun(0);
-    this.snake.init() //贪吃蛇数据归位
-    this.obstacle.init() //障碍物数据归位
-        //在场景中画目标
-    this.target.genRandomLocation()
-    this.target.draw()
-        //在场景中画障碍物
-    this.obstacle.genRandomLocation(this.target)
+    this.snake.init(); //贪吃蛇数据归位
+    this.obstacle.init(); //障碍物数据归位
+    //在场景中画目标
+    this.target.genRandomLocation();
+    this.target.draw();
+    //在场景中画障碍物
+    this.obstacle.genRandomLocation(this.target);
     if (localStorage.getItem("enableWall") === "true") {
-        console.log("墙被启动了")
-        this.obstacle.enableWall()
+        console.log("墙被启动了");
+        this.obstacle.enableWall();
     }
-    this.obstacle.draw()
-    this.snake.draw()
+    this.obstacle.draw();
+    this.snake.draw();
 }
 Scene.prototype.gameRun = function(score) {
     this.ctx.globalAlpha = 0.4;
@@ -62,8 +62,8 @@ Scene.prototype.gameOver = function() {
     this.canvas.addEventListener("click", (e) => {
         let x = e.offsetX;
         let y = e.offsetY;
-        this.ctx.isPointInPath(x, y)
-            //填充矩形
+        this.ctx.isPointInPath(x, y);
+        //填充矩形
         this.ctx.fillStyle = "coral"; //设置颜色
         console.log("点击画布的位置", x, y, this.ctx.isPointInPath(x, y))
         if (this.ctx.isPointInPath(x, y)) {

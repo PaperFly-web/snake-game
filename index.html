@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake Game</title>
-    <link rel="stylesheet" href="css/style.css"></link>
-    <link rel="stylesheet" href="css/index.css"></link>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/index.css" />
 </head>
 
 <body>
@@ -21,7 +21,7 @@
         <div id="game_rule" class="font_white">
             游戏场景说明： 白色方块为贪吃蛇 红色方块为目标 黄色方块为障碍物 黑色方块为墙
             <br><br>游戏规则：贪吃蛇吃到目标后身体长度+1，撞到障碍物，墙，和自己，游戏结束
-            <br><br>玩法说明：选择关卡，然后按Enter键开始游戏 空格键暂停游戏 A键关闭或者开启音乐
+            <br><br>玩法说明：选择关卡，然后按【Enter】键开始游戏 【空格】键暂停游戏 【A】键关闭或者开启音乐
         </div>
     </div>
 
@@ -37,38 +37,23 @@
 
     <div id="uer_set_data" class="play_box">
         <div class="content">
-
             <input placeholder="障碍物数量(1-100)" style="width: 100px;" type="number" class="user_custom content_item" required min="1" max="100" id="obstacleNum">
             <select style="width: 100px;" id="enableWall" class="user_custom content_item">
                     <option value="false" seleced>不启用墙</option>
                     <option value="true">启用墙</option>
                 </select>
             <button style="width: 100px;" type="submit" id="userCustom" class="content_item" onclick="userCustomData()">设置好了</button>
-
         </div>
     </div>
 
-    <script>
-        function userCustomData() {
-            flag = checkAndSetUserCustom();
-            if (!flag) {
-                alert("请设置好有效数据")
-            }
-            if (flag) {
-                hide('uer_set_data');
-            }
-        }
-    </script>
-
-    <script src="js/Utils.js"></script>
-
-    <script src="js/Obstacle.js"></script>
-    <script src="js/Target.js"></script>
-    <script src="js/Snake.js"></script>
-    <script src="js/Scene.js"></script>
-    <script src="js/Game.js"></script>
-    <script src="js/IOC.js"></script>
-    <script src="js/index.js"></script>
 </body>
+<script src="js/Utils.js"></script>
+<script src="js/Obstacle.js"></script>
+<script src="js/Target.js"></script>
+<script src="js/Snake.js"></script>
+<script src="js/Scene.js"></script>
+<script src="js/Game.js"></script>
+<script src="js/IOC.js"></script>
+<script src="js/index.js"></script>
 
 </html>

@@ -151,3 +151,13 @@ function checkAndSetUserCustom() {
     }
     return false;
 }
+
+function userCustomData() {
+    flag = checkAndSetUserCustom();
+    if (!flag) {
+        alert("请设置好有效数据")
+    }
+    if (flag) {
+        hide('uer_set_data');
+    }
+}

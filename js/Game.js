@@ -3,17 +3,35 @@ function Game(can, context, scene) {
     this.canvas = can;
     this.ctx = context;
     this.scene = scene;
-    this.isOver = false; //游戏是否结束
-
+    this.handleIsComplete = [true, true]; //监听键盘的
     this.snake = null;
     this.target = null;
     this.obstacle = null;
 
-    //用于存储每个关卡历史最高分
-    this.targerNum = [];
-    this.type //当前是在哪个关卡
 
+    this.timer = null;
+    this.openOrCloseBgAu = true;
 }
+Game.prototype.keyController = function(key) {
+    if (key === "Enter" && snakeIsShow && this.handleIsComplete[0]) {
+        this.timer = setInterval(() => {
+            this.run()
+        }, 150);
+        //播放背景音乐
+        backgroundAudio(true)
+        this.handleIsComplete[0] = false;
+        this.handleIsComplete[1] = true;
+    } else if (key === " " && snakeIsShow && this.handleIsComplete[1]) {
+        this.pause()
+        backgroundAudio(false)
+        this.handleIsComplete[0] = true;
+        this.handleIsComplete[1] = false;
+    } else if (key === "a") {
+        this.openOrCloseBgAu = !this.openOrCloseBgAu;
+        openOrCloseAudio(this.openOrCloseBgAu)
+    }
+}
+
 //初始化本地  每个关卡的历史最高分
 Game.prototype.init = function() {
     //获取本地存储的历史最高纪录
@@ -29,6 +47,7 @@ Game.prototype.init = function() {
         localStorage.setItem("targetNum", JSON.stringify(targerNum));
 
     }
+    this.handleIsComplete = [true, true];
 }
 Game.prototype.set = function(snake, target, obstacle) {
     this.snake = snake;
@@ -36,7 +55,7 @@ Game.prototype.set = function(snake, target, obstacle) {
     this.obstacle = obstacle;
 }
 
-Game.prototype.run = function(timer) {
+Game.prototype.run = function() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     this.target.draw()
     this.obstacle.draw()
@@ -51,23 +70,23 @@ Game.prototype.run = function(timer) {
     //检测是否有和身体发生碰撞和是否与障碍物有碰撞
     isOver = this.snake.checkCollision() || this.snake.collisionObstacle(this.obstacle);
     if (isOver) {
-        this.gameOver(timer)
+        this.gameOver()
         return;
     }
     this.scene.gameRun(this.snake.targetNum)
 }
 
-Game.prototype.pause = function(timer) {
-    clearInterval(timer)
+Game.prototype.pause = function() {
+    clearInterval(this.timer)
 }
 
-Game.prototype.gameOver = function(timer) {
+Game.prototype.gameOver = function() {
     //结束背景音乐
     backgroundAudio(false);
     //播放游戏结束声音,-1代表结束
     audio(-1)
     setMaxScore(parseInt(localStorage.getItem("type")));
-    this.pause(timer);
+    this.pause();
     this.scene.gameOver();
 
 }
